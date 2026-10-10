@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch ConsoleApp",
+            "request": "launch",
+            "mainClass": "com.fraud.detection.ui.ConsoleApp",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Launch VerificationRunner",
+            "request": "launch",
+            "mainClass": "com.fraud.detection.VerificationRunner",
+            "console": "integratedTerminal"
+        }
+    ]
+}
