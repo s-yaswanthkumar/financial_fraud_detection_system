@@ -166,27 +166,4 @@ The test suite ([`VerificationRunner.java`](file:///VerificationRunner.java)) va
 ==========================================================
 ```
 
----
 
-## 📦 GitHub Submission Guide
-
-When publishing or submitting this project to GitHub:
-
-### ✅ Files to Commit & Push
-- `algorithms/`
-- `auth/`
-- `engine/`
-- `model/`
-- `storage/`
-- `ui/`
-- `util/`
-- `VerificationRunner.java`
-- `data/`
-- `pom.xml`
-- `README.md`
-- `.gitignore`
-- `run-console.bat` and `run-verification.bat`
-- `.vscode/`
-
-### ❌ Files to EXCLUDE
-- `target/` (Compiled `.class` files — already configured in `.gitignore`)
