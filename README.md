@@ -51,6 +51,9 @@ dsa-3 financial fraud detection system/
 ├── util/                        # Custom generic data structures
 │   ├── MyArrayList.java
 │   └── MyQueue.java
+├── web/                         # Web GUI frontend and HTTP API server
+│   ├── index.html
+│   └── WebServer.java
 ├── .vscode/                     # VS Code launch and settings configurations
 │   ├── launch.json
 │   ├── settings.json
@@ -104,22 +107,31 @@ All matchers implement the `PatternMatcher` interface and report exact character
 
 ## 🚀 How to Run
 
-### Option 1: Terminal Compilation (Recommended)
+### Option 1: Web GUI Dashboard (Browser Frontend)
+To run the interactive web interface:
+```powershell
+javac -sourcepath . -d target/classes web/WebServer.java
+java -cp target/classes web.WebServer
+```
+Then open your browser to **http://localhost:8080** *(or simply double-click `run-web.bat`)*.
+
+### Option 2: Terminal Console Application
 Open a terminal in the project root folder:
 ```powershell
-# 1. Compile all source files into target/classes:
-javac -d target/classes util/*.java model/*.java storage/*.java algorithms/*.java engine/*.java auth/*.java ui/*.java VerificationRunner.java
+# 1. Compile source files into target/classes:
+javac -sourcepath . -d target/classes ui/ConsoleApp.java VerificationRunner.java
 
-# 2. Run the Interactive Dashboard:
+# 2. Run the Interactive CLI Dashboard:
 java -cp target/classes ui.ConsoleApp
 
 # 3. Or run the Automated Verification Test Suite:
 java -cp target/classes VerificationRunner
 ```
 
-### Option 2: 1-Click Batch Files (Windows)
-- Double-click or run `.\run-console.bat` for the Interactive Console.
-- Double-click or run `.\run-verification.bat` for the Verification Suite.
+### Option 3: 1-Click Batch Files (Windows)
+- Double-click `run-web.bat` to launch the Web GUI Dashboard in your browser.
+- Double-click `run-console.bat` for the CLI Console Application.
+- Double-click `run-verification.bat` for the Automated Verification Suite.
 
 ### Option 3: VS Code (Run & Debug)
 1. Open the project folder in VS Code.

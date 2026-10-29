@@ -29,7 +29,7 @@ public class ConsoleApp {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("=================================================================");
-        System.out.println("   WELCOME TO THE FINANCIAL FRAUD DETECTION SYSTEM (ACADEMIC 2)  ");
+        System.out.println("   WELCOME TO THE FINANCIAL FRAUD DETECTION SYSTEM               ");
         System.out.println("=================================================================");
 
         while (true) {

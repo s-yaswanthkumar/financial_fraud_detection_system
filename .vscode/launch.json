@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Web Dashboard",
+            "request": "launch",
+            "mainClass": "web.WebServer",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
             "name": "Launch ConsoleApp",
             "request": "launch",
             "mainClass": "ui.ConsoleApp",
