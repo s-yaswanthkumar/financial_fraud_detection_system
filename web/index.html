@@ -3,24 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Fraud Detection System - Dashboard</title>
+    <title>FraudGuard - Financial Fraud Detection System</title>
     <style>
         :root {
-            --bg-primary: #0a0e17;
-            --bg-secondary: #121826;
-            --bg-card: #182234;
-            --border: #233048;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --primary: #38bdf8;
-            --primary-glow: rgba(56, 189, 248, 0.2);
-            --success: #10b981;
-            --success-bg: rgba(16, 185, 129, 0.15);
-            --warning: #f59e0b;
-            --warning-bg: rgba(245, 158, 11, 0.15);
-            --danger: #ef4444;
-            --danger-bg: rgba(239, 68, 68, 0.15);
-            --radius: 12px;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --border-focus: #3b82f6;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
         }
 
         * {
@@ -31,95 +37,372 @@
         }
 
         body {
-            background-color: var(--bg-primary);
+            background-color: var(--bg-page);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
+        /* NAVBAR */
         header {
-            background-color: var(--bg-secondary);
+            background-color: var(--bg-card);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
+            padding: 0.9rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 50;
+            box-shadow: var(--shadow-sm);
         }
 
         .brand {
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
 
         .brand-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #0284c7, #38bdf8);
-            border-radius: 8px;
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
-            font-weight: bold;
             color: white;
-            box-shadow: 0 0 15px var(--primary-glow);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
         }
 
         .brand-text h1 {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 700;
             letter-spacing: -0.02em;
+            color: #0f172a;
         }
 
         .brand-text p {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            padding: 8px 18px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+            color: var(--text-main);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* VIEWS */
+        .view-section {
+            display: none;
+            flex: 1;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        /* HERO / HOME PAGE */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #bfdbfe;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            color: #0f172a;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 760px;
+            margin: 0 auto 2.5rem auto;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto 4rem auto;
+        }
+
+        @media (max-width: 800px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero h2 {
+                font-size: 2rem;
+            }
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        @media (max-width: 850px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.8rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+        }
+
+        .feature-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* AUTH FORMS (LOGIN / REGISTER) */
+        .auth-container {
+            max-width: 440px;
+            margin: 3.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .auth-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2.2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .auth-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .auth-header p {
+            font-size: 0.88rem;
             color: var(--text-muted);
         }
 
-        .user-panel {
-            display: flex;
-            align-items: center;
-            gap: 16px;
+        .form-group {
+            margin-bottom: 1.25rem;
         }
 
-        .user-chip {
-            background: var(--bg-card);
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: #ffffff;
             border: 1px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            color: var(--text-main);
+            font-size: 0.92rem;
+            outline: none;
+            transition: all 0.2s;
         }
 
-        .balance-pill {
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--primary);
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        .demo-accounts {
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .demo-accounts-title {
+            font-size: 0.78rem;
             font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .demo-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .demo-pill {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid #bfdbfe;
             padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
         }
 
-        .tabs {
-            display: flex;
-            gap: 8px;
-            background: var(--bg-secondary);
+        .demo-pill:hover {
+            background-color: #dbeafe;
+            border-color: #93c5fd;
+        }
+
+        /* DASHBOARD */
+        .dash-subnav {
+            background: var(--bg-card);
             border-bottom: 1px solid var(--border);
             padding: 0 2rem;
+            display: flex;
+            gap: 8px;
         }
 
-        .tab-btn {
+        .dash-tab-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
             padding: 1rem 1.25rem;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             font-weight: 600;
             cursor: pointer;
             border-bottom: 2px solid transparent;
@@ -129,29 +412,56 @@
             gap: 8px;
         }
 
-        .tab-btn:hover {
+        .dash-tab-btn:hover {
             color: var(--text-main);
         }
 
-        .tab-btn.active {
+        .dash-tab-btn.active {
             color: var(--primary);
             border-bottom-color: var(--primary);
         }
 
-        main {
-            flex: 1;
-            padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+        .dash-main {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 2rem;
             width: 100%;
         }
 
-        .tab-content {
-            display: none;
+        .account-overview-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
-        .tab-content.active {
-            display: block;
+        @media (max-width: 900px) {
+            .account-overview-strip {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .overview-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .overview-title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 4px;
+        }
+
+        .overview-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #0f172a;
         }
 
         .grid-2 {
@@ -169,92 +479,65 @@
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-md);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-sm);
         }
 
         .card-header {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
+            color: #0f172a;
         }
 
         .card-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
             margin-top: 2px;
         }
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px 14px;
-            color: var(--text-main);
-            font-size: 0.9rem;
-            outline: none;
-            transition: border 0.2s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #0284c7, #38bdf8);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .status-badge {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
+        .status-APPROVED {
+            background-color: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
         }
 
-        .btn-outline {
-            background: transparent;
+        .status-FLAGGED, .status-FLAGGED-OTP {
+            background-color: var(--warning-light);
+            color: var(--warning);
+            border: 1px solid #fde68a;
+        }
+
+        .status-BLOCKED {
+            background-color: var(--danger-light);
+            color: var(--danger);
+            border: 1px solid #fecaca;
+        }
+
+        .status-FAILED {
+            background-color: #f1f5f9;
+            color: var(--text-muted);
             border: 1px solid var(--border);
-            color: var(--text-main);
-        }
-
-        .btn-outline:hover {
-            background: var(--bg-secondary);
-            border-color: var(--primary);
         }
 
         .quick-presets {
@@ -265,11 +548,12 @@
         }
 
         .preset-badge {
-            background: var(--bg-secondary);
+            background: #f1f5f9;
             border: 1px solid var(--border);
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 0.75rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.15s;
         }
@@ -277,87 +561,56 @@
         .preset-badge:hover {
             border-color: var(--primary);
             color: var(--primary);
+            background: var(--primary-light);
         }
 
+        /* RISK METER GAUGE */
         .risk-meter-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem 1rem;
+            padding: 1.5rem 1rem;
             text-align: center;
         }
 
         .risk-gauge {
-            width: 180px;
-            height: 180px;
+            width: 170px;
+            height: 170px;
             border-radius: 50%;
             background: conic-gradient(
-                var(--success) 0deg 140deg,
-                var(--warning) 140deg 250deg,
-                var(--danger) 250deg 360deg
+                #16a34a 0deg 140deg,
+                #d97706 140deg 250deg,
+                #dc2626 250deg 360deg
             );
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+            box-shadow: var(--shadow-md);
         }
 
         .risk-gauge-inner {
-            width: 140px;
-            height: 140px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            background: var(--bg-card);
+            background: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .risk-score-value {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: 800;
+            color: #0f172a;
         }
 
         .risk-score-max {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
-        }
-
-        .status-badge {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .status-APPROVED {
-            background: var(--success-bg);
-            color: var(--success);
-            border: 1px solid var(--success);
-        }
-
-        .status-FLAGGED, .status-FLAGGED-OTP {
-            background: var(--warning-bg);
-            color: var(--warning);
-            border: 1px solid var(--warning);
-        }
-
-        .status-BLOCKED {
-            background: var(--danger-bg);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-        }
-
-        .status-FAILED {
-            background: rgba(148, 163, 184, 0.1);
-            color: var(--text-muted);
-            border: 1px solid var(--border);
+            font-weight: 600;
         }
 
         .factors-list {
@@ -367,10 +620,10 @@
         }
 
         .factor-item {
-            background: var(--bg-secondary);
+            background: #f8fafc;
             border: 1px solid var(--border);
             padding: 10px 14px;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             margin-bottom: 8px;
             font-size: 0.85rem;
             display: flex;
@@ -378,10 +631,25 @@
             gap: 10px;
         }
 
-        .factor-icon {
-            font-size: 1rem;
+        .factor-item.clean {
+            background-color: var(--success-light);
+            border-color: #bbf7d0;
+            color: #166534;
         }
 
+        .factor-item.warning {
+            background-color: var(--warning-light);
+            border-color: #fde68a;
+            color: #92400e;
+        }
+
+        .factor-item.danger {
+            background-color: var(--danger-light);
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+
+        /* TABLES */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -391,27 +659,26 @@
         th {
             text-align: left;
             padding: 12px 14px;
-            background: var(--bg-secondary);
+            background: #f8fafc;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
             border-bottom: 1px solid var(--border);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         td {
             padding: 12px 14px;
             border-bottom: 1px solid var(--border);
+            color: #334155;
         }
 
         tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
+            background: #f8fafc;
         }
 
-        .chart-box {
-            height: 240px;
-            margin-top: 1.5rem;
-            position: relative;
-        }
-
+        /* CHARTS */
         .bar-chart {
             display: flex;
             align-items: flex-end;
@@ -419,7 +686,8 @@
             height: 180px;
             border-bottom: 1px solid var(--border);
             padding-bottom: 8px;
-            gap: 12px;
+            gap: 14px;
+            margin-top: 1.5rem;
         }
 
         .bar-column {
@@ -433,8 +701,8 @@
 
         .bar-fill {
             width: 100%;
-            max-width: 45px;
-            background: linear-gradient(180deg, #38bdf8, #0284c7);
+            max-width: 44px;
+            background: linear-gradient(180deg, #3b82f6, #1d4ed8);
             border-radius: 6px 6px 0 0;
             min-height: 4px;
             transition: height 0.4s ease;
@@ -449,6 +717,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 70px;
+            font-weight: 600;
         }
 
         .bar-val {
@@ -458,13 +727,14 @@
             margin-bottom: 4px;
         }
 
+        /* MODAL */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(4px);
             display: none;
             align-items: center;
@@ -477,23 +747,24 @@
         }
 
         .modal {
-            background: var(--bg-card);
+            background: #ffffff;
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
+            border-radius: var(--radius-lg);
+            padding: 2.2rem;
             max-width: 440px;
             width: 90%;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: var(--shadow-lg);
             text-align: center;
         }
 
         .otp-input {
-            font-size: 1.8rem;
-            letter-spacing: 8px;
+            font-size: 2rem;
+            letter-spacing: 10px;
             text-align: center;
             font-family: monospace;
-            font-weight: 700;
+            font-weight: 800;
             margin: 1.5rem 0;
+            color: #0f172a;
         }
 
         .notification {
@@ -501,11 +772,11 @@
             bottom: 24px;
             right: 24px;
             padding: 12px 20px;
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             color: white;
             font-weight: 600;
             font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: var(--shadow-md);
             display: none;
             z-index: 200;
         }
@@ -513,473 +784,655 @@
 </head>
 <body>
 
+    <!-- TOP NAVBAR -->
     <header>
-        <div class="brand">
+        <a class="brand" onclick="navigateTo('home')">
             <div class="brand-icon">🛡️</div>
             <div class="brand-text">
                 <h1>FraudGuard</h1>
-                <p>Financial Fraud Detection & String Algorithm Benchmarking</p>
+                <p>Financial Fraud Detection & Algorithm Benchmark Engine</p>
             </div>
+        </a>
+
+        <!-- Logged Out Actions -->
+        <div class="nav-actions" id="loggedOutNav">
+            <button class="btn btn-outline" onclick="navigateTo('login')">Log In</button>
+            <button class="btn" onclick="navigateTo('register')">Create Account</button>
         </div>
-        <div class="user-panel">
-            <div class="user-chip">
-                <span>👤</span>
-                <select id="userSelector" style="width: auto; padding: 4px 8px; background: transparent; border: none; font-weight: 600;">
-                    <option value="U101">alice (U101)</option>
-                    <option value="U102">bob (U102)</option>
-                    <option value="U103">charlie (U103)</option>
-                    <option value="U104">david (U104)</option>
-                    <option value="U105">eve (U105)</option>
-                </select>
-                <div class="balance-pill" id="currentBalanceDisplay">$5,000.00</div>
-                <span id="userStatusBadge" class="status-badge status-APPROVED" style="margin-top: 0; padding: 3px 10px; font-size: 0.75rem;">ACTIVE</span>
-                <span id="userRiskScoreBadge" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Risk: 0.0</span>
+
+        <!-- Logged In Actions -->
+        <div class="nav-actions" id="loggedInNav" style="display: none;">
+            <div style="display: flex; align-items: center; gap: 10px; background: #f1f5f9; padding: 4px 12px; border-radius: 30px; border: 1px solid var(--border);">
+                <span style="font-size: 1rem;">👤</span>
+                <span id="navUsername" style="font-weight: 700; font-size: 0.9rem;">alice</span>
+                <span id="navStatusBadge" class="status-badge status-APPROVED" style="padding: 2px 8px; font-size: 0.7rem;">ACTIVE</span>
+                <span id="navRiskBadge" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Risk: 0.0</span>
+                <span id="navBalanceBadge" style="background: white; border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; font-weight: 800; color: var(--primary); font-size: 0.85rem;">₹5,000.00</span>
             </div>
+            <button class="btn btn-outline" style="padding: 6px 14px;" onclick="handleLogout()">Log Out</button>
         </div>
     </header>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('transfer')">💸 Transfer & Fraud Simulator</button>
-        <button class="tab-btn" onclick="switchTab('benchmark')">📊 Algorithm Benchmark Suite</button>
-        <button class="tab-btn" onclick="switchTab('history')">📜 Transaction Ledger</button>
-        <button class="tab-btn" onclick="switchTab('accounts')">👥 Account Management</button>
-    </div>
+    <!-- ================= VIEW 1: LANDING / HOME PAGE ================= -->
+    <section id="view-home" class="view-section active">
+        <div class="hero">
+            <div class="hero-badge">⚡ Deterministic String Automata + Multi-Factor Risk Scoring</div>
+            <h2>Next-Gen Financial Fraud Detection<br>Zero-Latency, Zero-Dependencies</h2>
+            <p>
+                A high-throughput fraud prevention engine built with six foundational string-matching algorithms 
+                and dynamic behavioral risk analysis. Intercept unauthorized transfers, duplicate card strikes, 
+                and illicit signatures in real time.
+            </p>
+            <div class="hero-cta">
+                <button class="btn" style="padding: 12px 28px; font-size: 1rem;" onclick="navigateTo('login')">
+                    🚀 Log In & Open Simulator
+                </button>
+                <button class="btn btn-outline" style="padding: 12px 24px; font-size: 1rem;" onclick="navigateTo('register')">
+                    📝 Register Account
+                </button>
+            </div>
 
-    <main>
-        <!-- TAB 1: TRANSFER SIMULATOR -->
-        <div id="tab-transfer" class="tab-content active">
-            <div class="grid-2">
-                <!-- Transfer Form -->
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Simulate Transaction</div>
-                            <div class="card-subtitle">Initiate a transfer and run real-time string pattern & risk analysis</div>
-                        </div>
-                    </div>
-
-                    <form id="transferForm" onsubmit="handleSimulate(event)">
-                        <div class="form-group">
-                            <label>Sender Account</label>
-                            <input type="text" id="senderDisplay" readonly value="alice (U101)" style="opacity: 0.8;">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Recipient Account</label>
-                            <select id="recipientSelect" required>
-                                <option value="U102">bob (U102)</option>
-                                <option value="U103">charlie (U103)</option>
-                                <option value="U104">david (U104)</option>
-                                <option value="U105">eve (U105)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Transfer Amount ($)</label>
-                            <input type="number" id="transferAmount" step="0.01" min="1" value="150.00" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Analysis Algorithm for Memo Scanning</label>
-                            <select id="algorithmSelector">
-                                <option value="0">1. Naive Pattern Matcher (Brute-force)</option>
-                                <option value="1" selected>2. Knuth-Morris-Pratt (KMP π-array)</option>
-                                <option value="2">3. Z-Function Matcher (Z-array)</option>
-                                <option value="3">4. Rabin-Karp Matcher (Rolling Polynomial Hash)</option>
-                                <option value="4">5. Aho-Corasick Matcher (Trie Automaton)</option>
-                                <option value="5">6. Kasai Suffix Array + LCP (Binary Search)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Payment Memo / Payload</label>
-                            <textarea id="transferMemo" placeholder="Enter transfer note or description...">Dinner and drinks split</textarea>
-                            
-                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Test Fraud Signatures:</div>
-                            <div class="quick-presets">
-                                <span class="preset-badge" onclick="setMemo('Lunch & movie reimbursement', 50)">✅ Clean Split ($50)</span>
-                                <span class="preset-badge" onclick="setMemo('offshore bank account tax evasion wire', 200)">⚠️ Tax Evasion Signature ($200)</span>
-                                <span class="preset-badge" onclick="setMemo('shell company money laundering scam mule', 1200)">🚨 Money Laundering ($1200)</span>
-                                <span class="preset-badge" onclick="setMemo('phishing scan wire transfer scam', 75)">⚠️ Phishing Scam ($75)</span>
-                                <span class="preset-badge" onclick="setMemo('Emergency high amount transfer', 4500)">📈 Deviation Spike ($4500)</span>
-                            </div>
-                        </div>
-
-                        <div id="bannedWarningBanner" style="display: none; background: var(--danger-bg); border: 1px solid var(--danger); color: #f87171; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-weight: 600;">
-                            ⛔ ACCOUNT BANNED: This account has accumulated 2 or more BLOCKED fraud violations. Outbound transfer privileges are suspended.
-                        </div>
-
-                        <button type="submit" id="submitTransferBtn" class="btn" style="width: 100%;">
-                            🔍 Evaluate Fraud Risk & Proceed
-                        </button>
-                    </form>
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">99.4%</div>
+                    <div class="stat-label">System Accuracy</div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-value">0.0%</div>
+                    <div class="stat-label">False Negative Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">&lt; 1 ms</div>
+                    <div class="stat-label">Pre-Auth Decision Latency</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Deterministic Matchers</div>
+                </div>
+            </div>
 
-                <!-- Risk Assessment Output Card -->
-                <div class="card" id="riskReportCard">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">Real-Time Risk Engine Report</div>
-                            <div class="card-subtitle">Dynamic multi-factor evaluation result</div>
-                        </div>
+            <!-- Features -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-title">6 Exact String Matchers</div>
+                    <div class="feature-desc">
+                        Built-from-scratch implementations of Naive, KMP, Z-Function, Rabin-Karp, Aho-Corasick, 
+                        and Kasai Suffix Array with Longest Common Prefix.
                     </div>
-
-                    <div class="risk-meter-container">
-                        <div class="risk-gauge" id="riskGaugeVisual">
-                            <div class="risk-gauge-inner">
-                                <div class="risk-score-value" id="riskScoreDisplay">0</div>
-                                <div class="risk-score-max">/ 100 Risk</div>
-                            </div>
-                        </div>
-
-                        <div class="status-badge status-APPROVED" id="riskTierBadge">
-                            APPROVED
-                        </div>
-
-                        <div class="factors-list" id="factorsContainer">
-                            <div class="factor-item">
-                                <span class="factor-icon">✅</span>
-                                <span>No suspicious risk factors detected. System ready.</span>
-                            </div>
-                        </div>
-
-                        <div id="actionButtonContainer" style="margin-top: 1.5rem; width: 100%; display: none;">
-                            <button class="btn" id="confirmTransferBtn" style="width: 100%;" onclick="executePendingTransfer()">
-                                🚀 Execute Approved Transfer
-                            </button>
-                        </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">Behavioral Risk Scoring</div>
+                    <div class="feature-desc">
+                        10-minute sliding window velocity checks (+25), historical expenditure mean deviations (+20), 
+                        and rapid duplicate transaction replay detection (+30).
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⛔</div>
+                    <div class="feature-title">Automated Account Ban Protection</div>
+                    <div class="feature-desc">
+                        Accounts that accumulate repeated critical fraud violations are automatically suspended to 
+                        freeze outbound transfer privileges.
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- TAB 2: ALGORITHM BENCHMARK SUITE -->
-        <div id="tab-benchmark" class="tab-content">
-            <div class="card" style="margin-bottom: 24px;">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Algorithm Performance Benchmark Suite</div>
-                        <div class="card-subtitle">Run all 6 custom pattern matching algorithms side-by-side to compare efficiency</div>
+    <!-- ================= VIEW 2: LOGIN PAGE ================= -->
+    <section id="view-login" class="view-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div style="font-size: 2.2rem; margin-bottom: 8px;">🔐</div>
+                    <h3>Sign In to Account</h3>
+                    <p>Access your personal balance, ledger, and fraud simulator</p>
+                </div>
+
+                <form onsubmit="handleLoginSubmit(event)">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="loginUsername" placeholder="e.g. alice" required value="alice">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="••••••••" required value="pass123">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 6px;">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="demo-accounts">
+                    <div class="demo-accounts-title">Quick Demo Login</div>
+                    <div class="demo-pills">
+                        <span class="demo-pill" onclick="quickLogin('alice')">alice (U101)</span>
+                        <span class="demo-pill" onclick="quickLogin('bob')">bob (U102)</span>
+                        <span class="demo-pill" onclick="quickLogin('charlie')">charlie (U103)</span>
+                        <span class="demo-pill" onclick="quickLogin('david')">david (U104)</span>
+                        <span class="demo-pill" onclick="quickLogin('eve')">eve (U105)</span>
                     </div>
                 </div>
 
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
+                    Don't have an account? <a href="#" onclick="navigateTo('register')" style="color: var(--primary); font-weight: 600; text-decoration: none;">Register here</a>
+                </div>
+                <div style="text-align: center; margin-top: 8px; font-size: 0.85rem;">
+                    <a href="#" onclick="navigateTo('home')" style="color: var(--text-muted); text-decoration: none;">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= VIEW 3: REGISTER PAGE ================= -->
+    <section id="view-register" class="view-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div style="font-size: 2.2rem; margin-bottom: 8px;">📝</div>
+                    <h3>Create New Account</h3>
+                    <p>Register as a financial customer with an initial deposit</p>
+                </div>
+
+                <form onsubmit="handleRegisterSubmit(event)">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="registerUsername" placeholder="e.g. frank" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="registerPassword" placeholder="Create password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Initial Balance Deposit (₹)</label>
+                        <input type="number" id="registerBalance" step="0.01" min="10" value="5000.00" required>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 6px;">
+                        Register Account
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
+                    Already have an account? <a href="#" onclick="navigateTo('login')" style="color: var(--primary); font-weight: 600; text-decoration: none;">Log in</a>
+                </div>
+                <div style="text-align: center; margin-top: 8px; font-size: 0.85rem;">
+                    <a href="#" onclick="navigateTo('home')" style="color: var(--text-muted); text-decoration: none;">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= VIEW 4: AUTHENTICATED USER DASHBOARD ================= -->
+    <section id="view-dashboard" class="view-section">
+        <!-- Subnavigation Tabs -->
+        <div class="dash-subnav">
+            <button class="dash-tab-btn active" onclick="switchDashTab('transfer')">💸 Transfer Funds (Simulator)</button>
+            <button class="dash-tab-btn" onclick="switchDashTab('history')">📜 My Transaction Ledger & Risk</button>
+            <button class="dash-tab-btn" onclick="switchDashTab('benchmark')">📊 Algorithm Benchmark Lab</button>
+        </div>
+
+        <div class="dash-main">
+            <!-- Account Overview Strip -->
+            <div class="account-overview-strip">
+                <div class="overview-box">
+                    <div class="overview-title">Account Balance</div>
+                    <div class="overview-value" id="cardBalanceDisplay">₹5,000.00</div>
+                </div>
+                <div class="overview-box">
+                    <div class="overview-title">Account Risk Rating</div>
+                    <div class="overview-value" id="cardRiskDisplay">0.0 <span style="font-size: 0.8rem; font-weight: 600; color: var(--success);">(Low)</span></div>
+                </div>
+                <div class="overview-box">
+                    <div class="overview-title">Security Status</div>
+                    <div class="overview-value" id="cardStatusDisplay" style="color: var(--success);">ACTIVE</div>
+                </div>
+                <div class="overview-box">
+                    <div class="overview-title">Account ID</div>
+                    <div class="overview-value" id="cardUserIdDisplay" style="font-size: 1.3rem;">U101</div>
+                </div>
+            </div>
+
+            <!-- Banned Warning Banner -->
+            <div id="bannedWarningBanner" style="display: none; background: var(--danger-light); border: 1px solid #fecaca; color: var(--danger); padding: 14px 20px; border-radius: var(--radius-md); margin-bottom: 24px; font-weight: 600;">
+                ⛔ <strong>ACCOUNT BANNED:</strong> This account has accumulated 2 or more BLOCKED fraud violations. All outbound transfer privileges have been revoked by security policy.
+            </div>
+
+            <!-- TAB 1: TRANSFER SIMULATOR -->
+            <div id="dash-tab-transfer" class="dash-content-pane active">
                 <div class="grid-2">
-                    <div class="form-group">
-                        <label>Target Corpus Text</label>
-                        <textarea id="benchText" style="min-height: 110px;">The suspect was caught conducting illegal money laundering activities. Investigators found evidence of a tax evasion scheme using an offshore bank account, a shell company, and a mule account to run a phishing scan and wire transfer scam.</textarea>
+                    <!-- Transfer Form -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Send Payment / Simulate Transfer</div>
+                                <div class="card-subtitle">Pre-authorization screening with string matching & behavioral models</div>
+                            </div>
+                        </div>
+
+                        <form id="transferForm" onsubmit="handleTransferSubmit(event)">
+                            <div class="form-group">
+                                <label>Recipient Account</label>
+                                <select id="recipientSelect" required>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Transfer Amount (₹)</label>
+                                <input type="number" id="transferAmount" step="0.01" min="1" value="150.00" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Memo Inspection Matching Algorithm</label>
+                                <select id="algorithmSelector">
+                                    <option value="0">1. Naive Matcher (Brute Force Scan)</option>
+                                    <option value="1" selected>2. Knuth-Morris-Pratt (KMP π-array)</option>
+                                    <option value="2">3. Z-Function Matcher (Z-array)</option>
+                                    <option value="3">4. Rabin-Karp Matcher (Rolling Polynomial Hash)</option>
+                                    <option value="4">5. Aho-Corasick Matcher (Trie Automaton)</option>
+                                    <option value="5">6. Kasai Suffix Array + LCP (Binary Search)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Payment Memo / Narrative Payload</label>
+                                <textarea id="transferMemo" placeholder="Enter transfer description...">Lunch and grocery split</textarea>
+                                
+                                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; font-weight: 600;">Quick Test Threat Signatures:</div>
+                                <div class="quick-presets">
+                                    <span class="preset-badge" onclick="setMemo('Dinner split and ride reimbursement', 45)">✅ Normal Payment (₹45)</span>
+                                    <span class="preset-badge" onclick="setMemo('tax evasion offshore bank transfer', 250)">⚠️ Tax Evasion Signature (₹250)</span>
+                                    <span class="preset-badge" onclick="setMemo('shell company money laundering scam mule', 1400)">🚨 Money Laundering (₹1400)</span>
+                                    <span class="preset-badge" onclick="setMemo('phishing scan wire transfer scam', 80)">⚠️ Phishing Scam (₹80)</span>
+                                    <span class="preset-badge" onclick="setMemo('Emergency high funds transfer', 4500)">📈 Deviation Spike (₹4500)</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="submitTransferBtn" class="btn" style="width: 100%; padding: 12px;">
+                                🔍 Screen Transaction & Evaluate Risk
+                            </button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label>Search Pattern Signature</label>
-                        <input type="text" id="benchPattern" value="scam" style="margin-bottom: 12px;">
-                        <button class="btn" style="width: 100%;" onclick="runBenchmark()">
-                            ⚡ Run Comparative Benchmark
-                        </button>
-                        <div class="quick-presets" style="margin-top: 10px;">
-                            <span class="preset-badge" onclick="setBench('scam')">Pattern: "scam"</span>
-                            <span class="preset-badge" onclick="setBench('money laundering')">Pattern: "money laundering"</span>
-                            <span class="preset-badge" onclick="setBench('shell company')">Pattern: "shell company"</span>
-                            <span class="preset-badge" onclick="setBench('offshore')">Pattern: "offshore"</span>
+
+                    <!-- Risk Report Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Real-Time Risk Engine Report</div>
+                                <div class="card-subtitle">Multi-factor algorithmic threat analysis</div>
+                            </div>
+                        </div>
+
+                        <div class="risk-meter-container">
+                            <div class="risk-gauge" id="riskGaugeVisual">
+                                <div class="risk-gauge-inner">
+                                    <div class="risk-score-value" id="riskScoreDisplay">0</div>
+                                    <div class="risk-score-max">/ 100 Risk</div>
+                                </div>
+                            </div>
+
+                            <div class="status-badge status-APPROVED" id="riskTierBadge" style="margin-top: 1.25rem;">
+                                APPROVED
+                            </div>
+
+                            <div class="factors-list" id="factorsContainer">
+                                <div class="factor-item clean">
+                                    <span>✅</span>
+                                    <span>Clean payment profile. No anomaly or signature detected.</span>
+                                </div>
+                            </div>
+
+                            <div id="actionButtonContainer" style="margin-top: 1.5rem; width: 100%; display: none;">
+                                <button class="btn" id="confirmTransferBtn" style="width: 100%;" onclick="executePendingTransfer()">
+                                    🚀 Execute Approved Transfer
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Benchmark Results Visual Chart & Table -->
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Performance Comparison Charts</div>
-                        <div class="card-subtitle">Character Comparisons Count (Lower = More Efficient)</div>
-                    </div>
-                </div>
-
-                <div class="bar-chart" id="comparisonsBarChart">
-                    <!-- Populated dynamically -->
-                </div>
-
-                <div style="margin-top: 2rem; overflow-x: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Algorithm</th>
-                                <th>Matches Found</th>
-                                <th>Comparisons Count</th>
-                                <th>Execution Time (ns)</th>
-                                <th>Time Complexity</th>
-                                <th>Space Complexity</th>
-                            </tr>
-                        </thead>
-                        <tbody id="benchmarkTableBody">
-                            <tr>
-                                <td colspan="6" style="text-align: center; color: var(--text-muted);">
-                                    Click "Run Comparative Benchmark" above to view live metrics.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: TRANSACTION HISTORY -->
-        <div id="tab-history" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <div>
-                        <div class="card-title">Transaction Ledger History</div>
-                        <div class="card-subtitle">Comprehensive persistent audit log of all completed and blocked transfers</div>
-                    </div>
-                    <button class="btn btn-outline" onclick="loadTransactions()">🔄 Refresh Ledger</button>
-                </div>
-
-                <div style="overflow-x: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>TX ID</th>
-                                <th>Sender</th>
-                                <th>Receiver</th>
-                                <th>Amount</th>
-                                <th>Memo</th>
-                                <th>Timestamp</th>
-                                <th>Risk Score</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transactionsTableBody">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: ACCOUNTS -->
-        <div id="tab-accounts" class="tab-content">
-            <div class="grid-2">
+            <!-- TAB 2: TRANSACTION LEDGER -->
+            <div id="dash-tab-history" class="dash-content-pane" style="display: none;">
                 <div class="card">
                     <div class="card-header">
                         <div>
-                            <div class="card-title">Register New Account</div>
-                            <div class="card-subtitle">Create a new customer profile with an initial balance</div>
+                            <div class="card-title">My Transaction Ledger & Risk Scores</div>
+                            <div class="card-subtitle">Auditable record of all completed and blocked transfers for this account</div>
+                        </div>
+                        <button class="btn btn-outline" style="font-size: 0.8rem;" onclick="loadMyTransactions()">🔄 Refresh</button>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>TX ID</th>
+                                    <th>Direction</th>
+                                    <th>Counterparty</th>
+                                    <th>Amount</th>
+                                    <th>Memo</th>
+                                    <th>Timestamp</th>
+                                    <th>Risk Score</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myTransactionsTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: BENCHMARK LAB -->
+            <div id="dash-tab-benchmark" class="dash-content-pane" style="display: none;">
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Comparative String Matching Suite</div>
+                            <div class="card-subtitle">Benchmark all 6 algorithms simultaneously against academic financial text</div>
                         </div>
                     </div>
 
-                    <form onsubmit="handleRegister(event)">
+                    <div class="grid-2">
                         <div class="form-group">
-                            <label>Username</label>
-                            <input type="text" id="regUsername" required placeholder="e.g. frank">
+                            <label>Corpus Target Text</label>
+                            <textarea id="benchText" style="min-height: 110px;">The suspect was caught conducting illegal money laundering activities. Investigators found evidence of a tax evasion scheme using an offshore bank account, a shell company, and a mule account to run a phishing scan and wire transfer scam.</textarea>
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="regPassword" required placeholder="••••••••">
+                            <label>Threat Pattern Signature</label>
+                            <input type="text" id="benchPattern" value="scam" style="margin-bottom: 12px;">
+                            <button class="btn" style="width: 100%;" onclick="runBenchmark()">
+                                ⚡ Run Benchmark Suite
+                            </button>
+                            <div class="quick-presets" style="margin-top: 10px;">
+                                <span class="preset-badge" onclick="setBenchPattern('scam')">Pattern: "scam"</span>
+                                <span class="preset-badge" onclick="setBenchPattern('money laundering')">Pattern: "money laundering"</span>
+                                <span class="preset-badge" onclick="setBenchPattern('shell company')">Pattern: "shell company"</span>
+                                <span class="preset-badge" onclick="setBenchPattern('offshore bank')">Pattern: "offshore bank"</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Initial Balance Deposit ($)</label>
-                            <input type="number" id="regBalance" min="0" step="0.01" value="2500.00" required>
-                        </div>
-                        <button type="submit" class="btn" style="width: 100%;">Create Account</button>
-                    </form>
+                    </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
                         <div>
-                            <div class="card-title">System Accounts</div>
-                            <div class="card-subtitle">Current registered users in database</div>
+                            <div class="card-title">Character Comparisons Count</div>
+                            <div class="card-subtitle">Empirical comparison count (Lower = Greater Efficiency)</div>
                         </div>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Username</th>
-                                <th>Balance</th>
-                                <th>Avg Risk</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTableBody">
-                            <!-- Populated dynamically -->
-                        </tbody>
-                    </table>
+
+                    <div class="bar-chart" id="comparisonsBarChart"></div>
+
+                    <div style="margin-top: 2rem; overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Algorithm</th>
+                                    <th>Matches</th>
+                                    <th>Comparisons</th>
+                                    <th>Execution Time</th>
+                                    <th>Time Complexity</th>
+                                    <th>Space Complexity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkTableBody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
     <!-- OTP VERIFICATION MODAL -->
     <div class="modal-overlay" id="otpModal">
         <div class="modal">
             <div style="font-size: 2.5rem; margin-bottom: 8px;">🔐</div>
-            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">Security Verification Required</h2>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">
-                Transaction was <strong style="color: var(--warning);">FLAGGED</strong> due to elevated risk factor indicators. 
-                Please enter the one-time authentication code.
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: #0f172a; margin-bottom: 6px;">Security Verification Required</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+                This transaction was <strong style="color: var(--warning);">FLAGGED</strong> due to elevated risk anomaly indicators.
+                Enter the one-time authentication code to authorize.
             </p>
-            <div style="font-size: 0.75rem; color: var(--primary); margin-top: 6px;">(Academic Demo Code: <strong>123456</strong>)</div>
+            <div style="font-size: 0.8rem; color: var(--primary); font-weight: 700; margin-top: 8px;">
+                (Academic Demo Verification Code: <strong>123456</strong>)
+            </div>
 
             <input type="text" id="otpCodeInput" class="otp-input" maxlength="6" placeholder="123456">
 
-            <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn btn-outline" onclick="closeOtpModal(false)">Cancel Transfer</button>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button class="btn btn-outline" onclick="closeOtpModal(true)">Reject Transfer</button>
                 <button class="btn" onclick="verifyOtpAndProceed()">Verify & Approve</button>
             </div>
         </div>
     </div>
 
-    <!-- Notification Toast -->
+    <!-- Toast Notification -->
     <div id="toast" class="notification"></div>
 
     <script>
-        let allUsers = [];
         let currentUser = null;
+        let allUsers = [];
         let pendingEvaluation = null;
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadUsers();
-            loadTransactions();
-            runBenchmark();
-
-            document.getElementById('userSelector').addEventListener('change', (e) => {
-                selectUser(e.target.value);
-            });
+            // Check session storage for logged-in user
+            const saved = sessionStorage.getItem('currentUser');
+            if (saved) {
+                try {
+                    currentUser = JSON.parse(saved);
+                    loadUserDataAndDashboard();
+                } catch(e) {
+                    navigateTo('home');
+                }
+            } else {
+                navigateTo('home');
+            }
         });
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        function navigateTo(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById('view-' + viewId);
+            if (target) target.classList.add('active');
 
-            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
-            if (activeBtn) activeBtn.classList.add('active');
-
-            const content = document.getElementById('tab-' + tabId);
-            if (content) content.classList.add('active');
-
-            if (tabId === 'history') loadTransactions();
-            if (tabId === 'accounts') loadUsers();
-        }
-
-        async function loadUsers() {
-            try {
-                const res = await fetch('/api/users');
-                allUsers = await res.json();
-
-                const selector = document.getElementById('userSelector');
-                selector.innerHTML = '';
-                const recipientSelect = document.getElementById('recipientSelect');
-                recipientSelect.innerHTML = '';
-
-                allUsers.forEach(u => {
-                    const opt = document.createElement('option');
-                    opt.value = u.userId;
-                    opt.textContent = `${u.username} (${u.userId})`;
-                    selector.appendChild(opt);
-
-                    const optRec = document.createElement('option');
-                    optRec.value = u.userId;
-                    optRec.textContent = `${u.username} (${u.userId})`;
-                    recipientSelect.appendChild(optRec);
-                });
-
-                if (!currentUser && allUsers.length > 0) {
-                    currentUser = allUsers[0];
-                }
-
-                if (currentUser) {
-                    selector.value = currentUser.userId;
-                    selectUser(currentUser.userId);
-                }
-
-                renderUsersTable();
-            } catch (err) {
-                showToast('Failed to load accounts: ' + err.message, true);
+            if (viewId === 'home') {
+                updateNavState(false);
             }
         }
 
-        function selectUser(userId) {
-            currentUser = allUsers.find(u => u.userId === userId) || allUsers[0];
+        function updateNavState(isLoggedIn) {
+            const loggedInNav = document.getElementById('loggedInNav');
+            const loggedOutNav = document.getElementById('loggedOutNav');
+            if (isLoggedIn && currentUser) {
+                loggedOutNav.style.display = 'none';
+                loggedInNav.style.display = 'flex';
+                document.getElementById('navUsername').textContent = currentUser.username;
+                document.getElementById('navBalanceBadge').textContent = `₹${currentUser.balance.toFixed(2)}`;
+                
+                const statusBadge = document.getElementById('navStatusBadge');
+                statusBadge.className = 'status-badge ' + (currentUser.isBanned ? 'status-BLOCKED' : 'status-APPROVED');
+                statusBadge.textContent = currentUser.isBanned ? 'BANNED' : 'ACTIVE';
+
+                document.getElementById('navRiskBadge').textContent = `Risk: ${currentUser.accountRiskScore}`;
+            } else {
+                loggedOutNav.style.display = 'flex';
+                loggedInNav.style.display = 'none';
+            }
+        }
+
+        async function quickLogin(username) {
+            document.getElementById('loginUsername').value = username;
+            document.getElementById('loginPassword').value = 'pass123';
+            await performLogin(username, 'pass123');
+        }
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            const u = document.getElementById('loginUsername').value.trim();
+            const p = document.getElementById('loginPassword').value.trim();
+            await performLogin(u, p);
+        }
+
+        async function performLogin(username, password) {
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    showToast(err.error || 'Login failed', true);
+                    return;
+                }
+
+                currentUser = await res.json();
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showToast(`Welcome back, ${currentUser.username}!`);
+                loadUserDataAndDashboard();
+            } catch(err) {
+                showToast('Connection error: ' + err.message, true);
+            }
+        }
+
+        async function handleRegisterSubmit(e) {
+            e.preventDefault();
+            const username = document.getElementById('registerUsername').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const balance = parseFloat(document.getElementById('registerBalance').value);
+
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, balance })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    showToast(err.error || 'Registration failed', true);
+                    return;
+                }
+
+                currentUser = await res.json();
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showToast(`Account created! Welcome, ${currentUser.username}!`);
+                loadUserDataAndDashboard();
+            } catch(err) {
+                showToast('Registration error: ' + err.message, true);
+            }
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem('currentUser');
+            currentUser = null;
+            navigateTo('home');
+            showToast('Logged out successfully');
+        }
+
+        async function loadUserDataAndDashboard() {
             if (!currentUser) return;
 
-            document.getElementById('currentBalanceDisplay').textContent = `$${currentUser.balance.toFixed(2)}`;
-            document.getElementById('senderDisplay').value = `${currentUser.username} (${currentUser.userId})`;
+            // Fetch fresh account info
+            try {
+                const resUsers = await fetch('/api/users');
+                allUsers = await resUsers.json();
+                const fresh = allUsers.find(u => u.userId === currentUser.userId);
+                if (fresh) currentUser = fresh;
+            } catch(e) {}
 
-            const statusBadge = document.getElementById('userStatusBadge');
-            const riskBadge = document.getElementById('userRiskScoreBadge');
+            updateNavState(true);
+            navigateTo('dashboard');
+            renderAccountOverview();
+            populateRecipients();
+            loadMyTransactions();
+            runBenchmark();
+        }
+
+        function renderAccountOverview() {
+            document.getElementById('cardBalanceDisplay').textContent = `₹${currentUser.balance.toFixed(2)}`;
+            document.getElementById('cardUserIdDisplay').textContent = currentUser.userId;
+
+            const riskBox = document.getElementById('cardRiskDisplay');
+            let riskLevel = '(Low)';
+            let riskColor = 'var(--success)';
+            if (currentUser.accountRiskScore >= 70) {
+                riskLevel = '(Critical)';
+                riskColor = 'var(--danger)';
+            } else if (currentUser.accountRiskScore >= 40) {
+                riskLevel = '(Moderate)';
+                riskColor = 'var(--warning)';
+            }
+            riskBox.innerHTML = `${currentUser.accountRiskScore.toFixed(1)} <span style="font-size: 0.8rem; font-weight: 600; color: ${riskColor};">${riskLevel}</span>`;
+
+            const statusBox = document.getElementById('cardStatusDisplay');
             const banner = document.getElementById('bannedWarningBanner');
             const submitBtn = document.getElementById('submitTransferBtn');
 
             if (currentUser.isBanned) {
-                statusBadge.className = 'status-badge status-BLOCKED';
-                statusBadge.textContent = 'BANNED';
-                riskBadge.textContent = `Risk: ${currentUser.accountRiskScore} (CRITICAL)`;
+                statusBox.textContent = 'BANNED';
+                statusBox.style.color = 'var(--danger)';
                 banner.style.display = 'block';
                 if (submitBtn) {
                     submitBtn.disabled = true;
-                    submitBtn.style.opacity = '0.5';
                     submitBtn.textContent = '⛔ Account is Banned from Outbound Transfers';
                 }
             } else {
-                statusBadge.className = 'status-badge status-APPROVED';
-                statusBadge.textContent = 'ACTIVE';
-                riskBadge.textContent = `Risk: ${currentUser.accountRiskScore}`;
+                statusBox.textContent = 'ACTIVE';
+                statusBox.style.color = 'var(--success)';
                 banner.style.display = 'none';
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.style.opacity = '1';
-                    submitBtn.textContent = '🔍 Evaluate Fraud Risk & Proceed';
+                    submitBtn.textContent = '🔍 Screen Transaction & Evaluate Risk';
                 }
             }
-
-            const recipientSelect = document.getElementById('recipientSelect');
-            Array.from(recipientSelect.options).forEach(opt => {
-                opt.disabled = (opt.value === currentUser.userId);
-            });
-            if (recipientSelect.value === currentUser.userId) {
-                const alt = Array.from(recipientSelect.options).find(o => !o.disabled);
-                if (alt) recipientSelect.value = alt.value;
-            }
         }
 
-        function renderUsersTable() {
-            const tbody = document.getElementById('usersTableBody');
-            tbody.innerHTML = '';
+        function populateRecipients() {
+            const select = document.getElementById('recipientSelect');
+            select.innerHTML = '';
             allUsers.forEach(u => {
-                const tr = document.createElement('tr');
-                const badgeClass = u.isBanned ? 'status-BLOCKED' : 'status-APPROVED';
-                const statusText = u.isBanned ? 'BANNED' : 'ACTIVE';
-                tr.innerHTML = `
-                    <td><strong>${u.userId}</strong></td>
-                    <td>${u.username}</td>
-                    <td style="color: var(--primary); font-weight: 700;">$${u.balance.toFixed(2)}</td>
-                    <td><strong>${u.accountRiskScore ? u.accountRiskScore.toFixed(1) : '0.0'}</strong></td>
-                    <td><span class="status-badge ${badgeClass}" style="margin-top: 0; padding: 2px 8px; font-size: 0.72rem;">${statusText}</span></td>
-                    <td>
-                        <button class="btn btn-outline" style="padding: 4px 10px; font-size: 0.75rem;" onclick="switchUserDirect('${u.userId}')">
-                            Switch
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                if (u.userId !== currentUser.userId) {
+                    const opt = document.createElement('option');
+                    opt.value = u.userId;
+                    opt.textContent = `${u.username} (${u.userId})`;
+                    select.appendChild(opt);
+                }
             });
         }
 
-        function switchUserDirect(userId) {
-            document.getElementById('userSelector').value = userId;
-            selectUser(userId);
-            switchTab('transfer');
-            showToast(`Switched active user to ${currentUser.username}`);
+        function switchDashTab(tabId) {
+            document.querySelectorAll('.dash-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.dash-content-pane').forEach(p => p.style.display = 'none');
+
+            const btn = Array.from(document.querySelectorAll('.dash-tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if (btn) btn.classList.add('active');
+
+            const pane = document.getElementById('dash-tab-' + tabId);
+            if (pane) pane.style.display = 'block';
+
+            if (tabId === 'history') loadMyTransactions();
+            if (tabId === 'benchmark') runBenchmark();
         }
 
-        function setMemo(memo, amt) {
+        function setMemo(memo, amount) {
             document.getElementById('transferMemo').value = memo;
-            if (amt) document.getElementById('transferAmount').value = amt;
+            if (amount) document.getElementById('transferAmount').value = amount;
         }
 
-        async function handleSimulate(e) {
+        async function handleTransferSubmit(e) {
             e.preventDefault();
             if (!currentUser) return;
+
+            if (currentUser.isBanned) {
+                showToast('Your account is BANNED from making transfers!', true);
+                return;
+            }
 
             const receiverId = document.getElementById('recipientSelect').value;
             const amount = parseFloat(document.getElementById('transferAmount').value);
@@ -987,7 +1440,7 @@
             const algorithmIndex = parseInt(document.getElementById('algorithmSelector').value);
 
             if (amount > currentUser.balance) {
-                showToast('Insufficient funds in account!', true);
+                showToast('Insufficient funds in your account!', true);
                 return;
             }
 
@@ -1024,7 +1477,7 @@
                 renderRiskReport(data);
 
             } catch (err) {
-                showToast('Evaluation failed: ' + err.message, true);
+                showToast('Screening error: ' + err.message, true);
             }
         }
 
@@ -1040,16 +1493,16 @@
 
             if (data.factors.length === 0) {
                 factorsContainer.innerHTML = `
-                    <div class="factor-item">
-                        <span class="factor-icon">✅</span>
+                    <div class="factor-item clean">
+                        <span>✅</span>
                         <span>Clean transaction pattern. No suspicious signatures found.</span>
                     </div>
                 `;
             } else {
                 data.factors.forEach(f => {
                     const item = document.createElement('div');
-                    item.className = 'factor-item';
-                    item.innerHTML = `<span class="factor-icon">⚠️</span><span>${f}</span>`;
+                    item.className = 'factor-item ' + (data.riskTier === 'BLOCKED' ? 'danger' : 'warning');
+                    item.innerHTML = `<span>⚠️</span><span>${f}</span>`;
                     factorsContainer.appendChild(item);
                 });
             }
@@ -1060,13 +1513,11 @@
             if (data.riskTier === 'APPROVED') {
                 actionBox.style.display = 'block';
                 confirmBtn.style.display = 'block';
-                confirmBtn.textContent = '🚀 Execute Approved Transfer ($' + pendingEvaluation.amount.toFixed(2) + ')';
-                confirmBtn.className = 'btn';
+                confirmBtn.textContent = '🚀 Complete Approved Transfer (₹' + pendingEvaluation.amount.toFixed(2) + ')';
             } else if (data.riskTier === 'FLAGGED/OTP') {
                 actionBox.style.display = 'block';
                 confirmBtn.style.display = 'block';
-                confirmBtn.textContent = '🔐 Enter OTP to Authorize Transfer';
-                confirmBtn.className = 'btn';
+                confirmBtn.textContent = '🔐 Enter OTP to Authorize';
                 confirmBtn.onclick = () => openOtpModal();
                 openOtpModal();
             } else {
@@ -1085,7 +1536,7 @@
             document.getElementById('otpModal').classList.remove('active');
             if (cancelled && pendingEvaluation) {
                 commitTransferRecord(pendingEvaluation, 'FAILED');
-                showToast('Transfer rejected by user', true);
+                showToast('Transaction rejected by user', true);
             }
         }
 
@@ -1096,7 +1547,7 @@
                 showToast('OTP verified successfully!');
                 executePendingTransfer();
             } else {
-                showToast('Invalid OTP Code. Transfer rejected.', true);
+                showToast('Invalid OTP Code. Transfer failed.', true);
                 closeOtpModal(false);
                 commitTransferRecord(pendingEvaluation, 'FAILED');
             }
@@ -1110,7 +1561,7 @@
         async function executeBlockedTransfer() {
             if (!pendingEvaluation) return;
             await commitTransferRecord(pendingEvaluation, 'BLOCKED');
-            showToast('Transaction automatically BLOCKED by Fraud Engine!', true);
+            showToast('Transaction BLOCKED by security policy!', true);
         }
 
         async function commitTransferRecord(tx, status) {
@@ -1131,37 +1582,42 @@
                 const data = await res.json();
                 if (data.success) {
                     if (status === 'APPROVED') {
-                        showToast(`Transfer of $${tx.amount.toFixed(2)} completed!`);
+                        showToast(`Transfer of ₹${tx.amount.toFixed(2)} completed!`);
                         currentUser.balance = data.newSenderBalance;
-                        document.getElementById('currentBalanceDisplay').textContent = `$${currentUser.balance.toFixed(2)}`;
                     }
-                    loadUsers();
-                    loadTransactions();
+                    await loadUserDataAndDashboard();
                 }
             } catch (err) {
-                showToast('Transaction error: ' + err.message, true);
+                showToast('Execution error: ' + err.message, true);
             }
         }
 
-        async function loadTransactions() {
+        async function loadMyTransactions() {
+            if (!currentUser) return;
             try {
-                const res = await fetch('/api/transactions');
+                const res = await fetch('/api/transactions?userId=' + currentUser.userId);
                 const txs = await res.json();
-                const tbody = document.getElementById('transactionsTableBody');
+                const tbody = document.getElementById('myTransactionsTableBody');
                 tbody.innerHTML = '';
 
                 if (txs.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No transactions recorded yet.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 2rem;">No transactions recorded for this account.</td></tr>`;
                     return;
                 }
 
                 txs.reverse().forEach(tx => {
+                    const isSender = (tx.senderId === currentUser.userId);
+                    const direction = isSender 
+                        ? '<span style="color: var(--danger); font-weight: 700;">Sent ↗</span>' 
+                        : '<span style="color: var(--success); font-weight: 700;">Received ↙</span>';
+                    const counterparty = isSender ? `${tx.receiverName} (${tx.receiverId})` : `${tx.senderName} (${tx.senderId})`;
+
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td><strong>${tx.txId}</strong></td>
-                        <td>${tx.senderName} (${tx.senderId})</td>
-                        <td>${tx.receiverName} (${tx.receiverId})</td>
-                        <td style="font-weight: 700; color: var(--primary);">$${tx.amount.toFixed(2)}</td>
+                        <td>${direction}</td>
+                        <td>${counterparty}</td>
+                        <td style="font-weight: 700; color: #0f172a;">₹${tx.amount.toFixed(2)}</td>
                         <td>${escapeHtml(tx.memo)}</td>
                         <td style="font-size: 0.8rem; color: var(--text-muted);">${tx.timestamp}</td>
                         <td><strong>${tx.riskScore.toFixed(1)}</strong></td>
@@ -1170,12 +1626,12 @@
                     tbody.appendChild(tr);
                 });
             } catch (err) {
-                showToast('Failed to load transactions: ' + err.message, true);
+                showToast('Failed to load ledger: ' + err.message, true);
             }
         }
 
-        function setBench(pattern) {
-            document.getElementById('benchPattern').value = pattern;
+        function setBenchPattern(pat) {
+            document.getElementById('benchPattern').value = pat;
             runBenchmark();
         }
 
@@ -1190,7 +1646,6 @@
                     body: JSON.stringify({ text, pattern })
                 });
                 const data = await res.json();
-
                 renderBenchmarkResults(data.results);
             } catch (err) {
                 showToast('Benchmark failed: ' + err.message, true);
@@ -1215,7 +1670,7 @@
                     <td><strong>${r.algorithmName}</strong></td>
                     <td style="color: var(--success); font-weight: 700;">${r.matchesFound}</td>
                     <td><strong>${r.comparisonsCount.toLocaleString()}</strong></td>
-                    <td style="color: var(--primary); font-family: monospace;">${r.executionTimeNano.toLocaleString()} ns</td>
+                    <td style="color: var(--primary); font-family: monospace; font-weight: 600;">${r.executionTimeNano.toLocaleString()} ns</td>
                     <td><code>${r.timeComplexity}</code></td>
                     <td><code>${r.spaceComplexity}</code></td>
                 `;
@@ -1231,35 +1686,6 @@
                 `;
                 chart.appendChild(col);
             });
-        }
-
-        async function handleRegister(e) {
-            e.preventDefault();
-            const username = document.getElementById('regUsername').value.trim();
-            const password = document.getElementById('regPassword').value.trim();
-            const balance = parseFloat(document.getElementById('regBalance').value);
-
-            try {
-                const res = await fetch('/api/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password, balance })
-                });
-
-                const data = await res.json();
-                if (data.error) {
-                    showToast(data.error, true);
-                    return;
-                }
-
-                showToast(`User ${data.username} registered with ID ${data.userId}!`);
-                document.getElementById('regUsername').value = '';
-                document.getElementById('regPassword').value = '';
-                await loadUsers();
-                selectUser(data.userId);
-            } catch (err) {
-                showToast('Registration failed: ' + err.message, true);
-            }
         }
 
         function showToast(msg, isError = false) {

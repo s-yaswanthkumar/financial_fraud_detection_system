@@ -72,7 +72,7 @@ public class ConsoleApp {
         double avgRisk = riskEngine.getAccountRiskScore(user.getUserId());
         String statusStr = isBanned ? "BANNED (SUSPENDED)" : "ACTIVE";
         System.out.println("\n=================================================================");
-        System.out.printf("  USER DASHBOARD | User: %s (%s) | Status: %s | Risk: %.1f | Balance: $%.2f\n", 
+        System.out.printf("  USER DASHBOARD | User: %s (%s) | Status: %s | Risk: %.1f | Balance: ₹%.2f\n", 
                 user.getUsername(), user.getUserId(), statusStr, avgRisk, user.getBalance());
         System.out.println("=================================================================");
         System.out.println("1. Transfer Funds (Simulate Transaction)");
@@ -94,7 +94,7 @@ public class ConsoleApp {
                 handleBenchmarkSuite(scanner);
                 break;
             case 4:
-                System.out.printf("\nYour current balance is: $%.2f\n", authService.getCurrentUser().getBalance());
+                System.out.printf("\nYour current balance is: ₹%.2f\n", authService.getCurrentUser().getBalance());
                 break;
             case 5:
                 authService.logout();
@@ -134,7 +134,7 @@ public class ConsoleApp {
             System.out.println("[ERROR] Password cannot be empty.");
             return;
         }
-        System.out.print("Enter initial deposit balance: $");
+        System.out.print("Enter initial deposit balance: ₹");
         double balance = getDoubleInput(scanner);
         if (balance < 0) {
             System.out.println("[ERROR] Initial balance cannot be negative.");
@@ -174,7 +174,7 @@ public class ConsoleApp {
             return;
         }
 
-        System.out.print("Enter Transfer Amount: $");
+        System.out.print("Enter Transfer Amount: ₹");
         double amount = getDoubleInput(scanner);
         if (amount <= 0) {
             System.out.println("[ERROR] Transfer amount must be positive.");
@@ -182,7 +182,7 @@ public class ConsoleApp {
         }
 
         if (sender.getBalance() < amount) {
-            System.out.printf("[ERROR] Insufficient funds. Available balance: $%.2f\n", sender.getBalance());
+            System.out.printf("[ERROR] Insufficient funds. Available balance: ₹%.2f\n", sender.getBalance());
             return;
         }
 
@@ -225,7 +225,7 @@ public class ConsoleApp {
         System.out.printf("  Transaction ID    : %s\n", txId);
         System.out.printf("  Sender ID         : %s\n", sender.getUserId());
         System.out.printf("  Receiver ID       : %s\n", receiver.getUserId());
-        System.out.printf("  Amount            : $%.2f\n", amount);
+        System.out.printf("  Amount            : ₹%.2f\n", amount);
         System.out.printf("  Risk Score (0-100): %.1f\n", assessment.getFinalScore());
         System.out.printf("  Risk Tier Level   : %s\n", assessment.getRiskTier());
         System.out.println("  Risk Trigger Factors:");
@@ -277,7 +277,7 @@ public class ConsoleApp {
 
         tx.setStatus(status);
         storageService.addTransaction(tx);
-        System.out.printf("\n[SUCCESS] Transaction %s processed successfully!\n$%.2f transferred to %s.\n",
+        System.out.printf("\n[SUCCESS] Transaction %s processed successfully!\n₹%.2f transferred to %s.\n",
                 tx.getTxId(), amount, receiver.getUsername());
     }
 
@@ -317,7 +317,7 @@ public class ConsoleApp {
                 displayMemo = displayMemo.substring(0, 22) + "...";
             }
 
-            System.out.printf("| %-8s | %-8s | %-8s | $%-10.2f | %-25s | %-19s | %-10.1f | %-10s |\n",
+            System.out.printf("| %-8s | %-8s | %-8s | ₹%-10.2f | %-25s | %-19s | %-10.1f | %-10s |\n",
                     tx.getTxId(),
                     senderName,
                     receiverName,
@@ -390,7 +390,7 @@ public class ConsoleApp {
                 String line = scanner.nextLine().trim();
                 return Double.parseDouble(line);
             } catch (NumberFormatException e) {
-                System.out.print("Invalid decimal number. Enter a numeric value: $");
+                System.out.print("Invalid decimal number. Enter a numeric value: ₹");
             }
         }
     }

@@ -75,7 +75,7 @@ public class FraudRiskEngine {
             double avgAmount = totalAmount / senderTxCount;
             if (currentTx.getAmount() > 3 * avgAmount) {
                 score += 20;
-                factors.add(String.format("Historical Deviation: Amount $%.2f is > 3x average ($%.2f) (+20)", currentTx.getAmount(), avgAmount));
+                factors.add(String.format("Historical Deviation: Amount ₹%.2f is > 3x average (₹%.2f) (+20)", currentTx.getAmount(), avgAmount));
             }
         }
 
