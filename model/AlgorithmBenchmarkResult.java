@@ -1,4 +1,4 @@
-package com.fraud.detection.model;
+package model;
 
 public class AlgorithmBenchmarkResult {
     private String algorithmName;

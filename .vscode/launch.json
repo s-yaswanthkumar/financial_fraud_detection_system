@@ -5,14 +5,14 @@
             "type": "java",
             "name": "Launch ConsoleApp",
             "request": "launch",
-            "mainClass": "com.fraud.detection.ui.ConsoleApp",
+            "mainClass": "ui.ConsoleApp",
             "console": "integratedTerminal"
         },
         {
             "type": "java",
             "name": "Launch VerificationRunner",
             "request": "launch",
-            "mainClass": "com.fraud.detection.VerificationRunner",
+            "mainClass": "VerificationRunner",
             "console": "integratedTerminal"
         }
     ]

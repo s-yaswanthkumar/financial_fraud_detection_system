@@ -1,6 +1,6 @@
-package com.fraud.detection.model;
+package model;
 
-import com.fraud.detection.util.MyArrayList;
+import util.MyArrayList;
 
 public class RiskAssessment {
     private double finalScore;

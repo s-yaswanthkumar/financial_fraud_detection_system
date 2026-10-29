@@ -1,8 +1,8 @@
-package com.fraud.detection.auth;
+package auth;
 
-import com.fraud.detection.model.User;
-import com.fraud.detection.storage.FileStorageService;
-import com.fraud.detection.util.MyArrayList;
+import model.User;
+import storage.FileStorageService;
+import util.MyArrayList;
 
 import java.time.LocalDateTime;
 

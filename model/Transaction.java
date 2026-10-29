@@ -1,4 +1,4 @@
-package com.fraud.detection.model;
+package model;
 
 import java.time.LocalDateTime;
 

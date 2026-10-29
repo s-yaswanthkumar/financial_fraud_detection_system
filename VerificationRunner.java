@@ -1,10 +1,8 @@
-package com.fraud.detection;
-
-import com.fraud.detection.algorithms.*;
-import com.fraud.detection.engine.FraudRiskEngine;
-import com.fraud.detection.model.*;
-import com.fraud.detection.storage.CsvFileStorageServiceImpl;
-import com.fraud.detection.util.MyArrayList;
+import algorithms.*;
+import engine.FraudRiskEngine;
+import model.*;
+import storage.CsvFileStorageServiceImpl;
+import util.MyArrayList;
 
 import java.io.IOException;
 import java.nio.file.Files;

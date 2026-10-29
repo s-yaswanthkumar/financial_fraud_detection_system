@@ -1,7 +1,7 @@
-package com.fraud.detection.algorithms;
+package algorithms;
 
-import com.fraud.detection.model.AlgorithmBenchmarkResult;
-import com.fraud.detection.util.MyQueue;
+import model.AlgorithmBenchmarkResult;
+import util.MyQueue;
 
 public class AhoCorasickPatternMatcher implements PatternMatcher {
 

@@ -1,16 +1,16 @@
-package com.fraud.detection.ui;
+package ui;
 
-import com.fraud.detection.algorithms.AlgorithmBenchmarkRunner;
-import com.fraud.detection.algorithms.PatternMatcher;
-import com.fraud.detection.auth.AuthService;
-import com.fraud.detection.engine.FraudRiskEngine;
-import com.fraud.detection.model.AlgorithmBenchmarkResult;
-import com.fraud.detection.model.RiskAssessment;
-import com.fraud.detection.model.Transaction;
-import com.fraud.detection.model.User;
-import com.fraud.detection.storage.CsvFileStorageServiceImpl;
-import com.fraud.detection.storage.FileStorageService;
-import com.fraud.detection.util.MyArrayList;
+import algorithms.AlgorithmBenchmarkRunner;
+import algorithms.PatternMatcher;
+import auth.AuthService;
+import engine.FraudRiskEngine;
+import model.AlgorithmBenchmarkResult;
+import model.RiskAssessment;
+import model.Transaction;
+import model.User;
+import storage.CsvFileStorageServiceImpl;
+import storage.FileStorageService;
+import util.MyArrayList;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

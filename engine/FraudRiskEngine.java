@@ -1,10 +1,10 @@
-package com.fraud.detection.engine;
+package engine;
 
-import com.fraud.detection.algorithms.PatternMatcher;
-import com.fraud.detection.model.RiskAssessment;
-import com.fraud.detection.model.Transaction;
-import com.fraud.detection.storage.FileStorageService;
-import com.fraud.detection.util.MyArrayList;
+import algorithms.PatternMatcher;
+import model.RiskAssessment;
+import model.Transaction;
+import storage.FileStorageService;
+import util.MyArrayList;
 
 import java.time.LocalDateTime;
 

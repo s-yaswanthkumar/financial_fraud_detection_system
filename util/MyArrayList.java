@@ -1,4 +1,4 @@
-package com.fraud.detection.util;
+package util;
 
 public class MyArrayList<T> {
     private Object[] elements;

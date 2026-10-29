@@ -15,8 +15,8 @@
     </properties>
 
     <build>
+        <sourceDirectory>.</sourceDirectory>
         <plugins>
-            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -24,15 +24,17 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
+                    <excludes>
+                        <exclude>target/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
-            <!-- Exec Maven Plugin for running the ConsoleApp -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>com.fraud.detection.ui.ConsoleApp</mainClass>
+                    <mainClass>ui.ConsoleApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>

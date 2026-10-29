@@ -1,8 +1,8 @@
-package com.fraud.detection.storage;
+package storage;
 
-import com.fraud.detection.model.User;
-import com.fraud.detection.model.Transaction;
-import com.fraud.detection.util.MyArrayList;
+import model.User;
+import model.Transaction;
+import util.MyArrayList;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

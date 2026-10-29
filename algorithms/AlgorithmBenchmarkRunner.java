@@ -1,7 +1,7 @@
-package com.fraud.detection.algorithms;
+package algorithms;
 
-import com.fraud.detection.model.AlgorithmBenchmarkResult;
-import com.fraud.detection.util.MyArrayList;
+import model.AlgorithmBenchmarkResult;
+import util.MyArrayList;
 
 public class AlgorithmBenchmarkRunner {
 

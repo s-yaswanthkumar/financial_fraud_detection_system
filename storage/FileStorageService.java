@@ -1,8 +1,8 @@
-package com.fraud.detection.storage;
+package storage;
 
-import com.fraud.detection.model.User;
-import com.fraud.detection.model.Transaction;
-import com.fraud.detection.util.MyArrayList;
+import model.User;
+import model.Transaction;
+import util.MyArrayList;
 
 public interface FileStorageService {
     MyArrayList<User> loadUsers();

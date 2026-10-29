@@ -14,49 +14,48 @@ This project simulates a financial transaction processing pipeline equipped with
 - **6 From-Scratch Pattern Matchers**: Naive, Knuth-Morris-Pratt (KMP), Z-Function, Rabin-Karp, Aho-Corasick, and Kasai Suffix Array with LCP.
 - **Dynamic Risk Engine**: 0–100 scoring tier model (APPROVED, FLAGGED with OTP, BLOCKED).
 - **Persistent Storage**: Java NIO-based CSV storage engine with auto-seeding for default accounts and past transactions.
+- **Flat 1-Path Modular Structure**: No deeply nested folders; all packages are directly one folder away from the project root.
 
 ---
 
 ## 📂 Project Directory Structure
 
-The main project folder is:
 ```
 dsa-3 financial fraud detection system/
+├── algorithms/                  # 6 String matching implementations
+│   ├── AhoCorasickPatternMatcher.java
+│   ├── AlgorithmBenchmarkRunner.java
+│   ├── KasaiLcpPatternMatcher.java
+│   ├── KmpPatternMatcher.java
+│   ├── NaivePatternMatcher.java
+│   ├── PatternMatcher.java
+│   ├── RabinKarpPatternMatcher.java
+│   └── ZFunctionPatternMatcher.java
+├── auth/                        # Session management
+│   └── AuthService.java
+├── data/                        # Persistent storage (auto-seeded)
+│   ├── transactions.csv
+│   └── users.csv
+├── engine/                      # Real-time fraud scoring engine
+│   └── FraudRiskEngine.java
+├── model/                       # Domain entities
+│   ├── AlgorithmBenchmarkResult.java
+│   ├── RiskAssessment.java
+│   ├── Transaction.java
+│   └── User.java
+├── storage/                     # CSV file persistence & auto-seeding
+│   ├── CsvFileStorageServiceImpl.java
+│   └── FileStorageService.java
+├── ui/                          # Interactive terminal console dashboard
+│   └── ConsoleApp.java
+├── util/                        # Custom generic data structures
+│   ├── MyArrayList.java
+│   └── MyQueue.java
 ├── .vscode/                     # VS Code launch and settings configurations
 │   ├── launch.json
 │   ├── settings.json
 │   └── tasks.json
-├── data/                        # Persistent storage (auto-seeded)
-│   ├── transactions.csv
-│   └── users.csv
-├── src/main/java/com/fraud/detection/
-│   ├── algorithms/              # 6 String matching implementations
-│   │   ├── AhoCorasickPatternMatcher.java
-│   │   ├── AlgorithmBenchmarkRunner.java
-│   │   ├── KasaiLcpPatternMatcher.java
-│   │   ├── KmpPatternMatcher.java
-│   │   ├── NaivePatternMatcher.java
-│   │   ├── PatternMatcher.java
-│   │   ├── RabinKarpPatternMatcher.java
-│   │   └── ZFunctionPatternMatcher.java
-│   ├── auth/                    # Session management
-│   │   └── AuthService.java
-│   ├── engine/                  # Real-time fraud scoring engine
-│   │   └── FraudRiskEngine.java
-│   ├── model/                   # Domain entities
-│   │   ├── AlgorithmBenchmarkResult.java
-│   │   ├── RiskAssessment.java
-│   │   ├── Transaction.java
-│   │   └── User.java
-│   ├── storage/                 # CSV file persistence & auto-seeding
-│   │   ├── CsvFileStorageServiceImpl.java
-│   │   └── FileStorageService.java
-│   ├── ui/                      # Interactive terminal console dashboard
-│   │   └── ConsoleApp.java
-│   ├── util/                    # Custom generic data structures
-│   │   ├── MyArrayList.java
-│   │   └── MyQueue.java
-│   └── VerificationRunner.java  # Automated system test suite
+├── VerificationRunner.java      # Automated system test suite
 ├── .gitignore                   # Excludes target/ and compiled binaries
 ├── pom.xml                      # Maven project descriptor
 ├── README.md                    # Project documentation
@@ -109,13 +108,13 @@ All matchers implement the `PatternMatcher` interface and report exact character
 Open a terminal in the project root folder:
 ```powershell
 # 1. Compile all source files into target/classes:
-javac -sourcepath src/main/java -d target/classes src/main/java/com/fraud/detection/ui/ConsoleApp.java src/main/java/com/fraud/detection/VerificationRunner.java
+javac -d target/classes util/*.java model/*.java storage/*.java algorithms/*.java engine/*.java auth/*.java ui/*.java VerificationRunner.java
 
 # 2. Run the Interactive Dashboard:
-java -cp target/classes com.fraud.detection.ui.ConsoleApp
+java -cp target/classes ui.ConsoleApp
 
 # 3. Or run the Automated Verification Test Suite:
-java -cp target/classes com.fraud.detection.VerificationRunner
+java -cp target/classes VerificationRunner
 ```
 
 ### Option 2: 1-Click Batch Files (Windows)
@@ -137,7 +136,7 @@ mvn exec:java
 
 ## 🧪 Verification & Automated Test Results
 
-The test suite ([`VerificationRunner.java`](file:///src/main/java/com/fraud/detection/VerificationRunner.java)) validates:
+The test suite ([`VerificationRunner.java`](file:///VerificationRunner.java)) validates:
 1. Pattern matching correctness across all 6 matchers on complex text.
 2. Character comparison tracking.
 3. Risk calculation accuracy across all 5 test scenarios (Normal, Deviation, Blacklist, Duplicate, Multi-Factor Combo).
@@ -168,3 +167,26 @@ The test suite ([`VerificationRunner.java`](file:///src/main/java/com/fraud/dete
 ```
 
 ---
+
+## 📦 GitHub Submission Guide
+
+When publishing or submitting this project to GitHub:
+
+### ✅ Files to Commit & Push
+- `algorithms/`
+- `auth/`
+- `engine/`
+- `model/`
+- `storage/`
+- `ui/`
+- `util/`
+- `VerificationRunner.java`
+- `data/`
+- `pom.xml`
+- `README.md`
+- `.gitignore`
+- `run-console.bat` and `run-verification.bat`
+- `.vscode/`
+
+### ❌ Files to EXCLUDE
+- `target/` (Compiled `.class` files — already configured in `.gitignore`)

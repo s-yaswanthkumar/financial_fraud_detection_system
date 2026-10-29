@@ -1,6 +1,6 @@
-package com.fraud.detection.algorithms;
+package algorithms;
 
-import com.fraud.detection.model.AlgorithmBenchmarkResult;
+import model.AlgorithmBenchmarkResult;
 
 public interface PatternMatcher {
     AlgorithmBenchmarkResult search(String text, String pattern);

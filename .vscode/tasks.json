@@ -4,7 +4,7 @@
         {
             "label": "Build System",
             "type": "shell",
-            "command": "javac -sourcepath src/main/java -d target/classes src/main/java/com/fraud/detection/ui/ConsoleApp.java src/main/java/com/fraud/detection/VerificationRunner.java",
+            "command": "javac -d target/classes ui/ConsoleApp.java VerificationRunner.java",
             "group": {
                 "kind": "build",
                 "isDefault": true
