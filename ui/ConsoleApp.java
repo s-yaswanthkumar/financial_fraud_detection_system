@@ -68,9 +68,12 @@ public class ConsoleApp {
     private static void showDashboard(Scanner scanner) {
         authService.refreshCurrentUser();
         User user = authService.getCurrentUser();
+        boolean isBanned = riskEngine.isAccountBanned(user.getUserId());
+        double avgRisk = riskEngine.getAccountRiskScore(user.getUserId());
+        String statusStr = isBanned ? "BANNED (SUSPENDED)" : "ACTIVE";
         System.out.println("\n=================================================================");
-        System.out.printf("  USER DASHBOARD | User: %s (%s) | Balance: $%.2f\n", 
-                user.getUsername(), user.getUserId(), user.getBalance());
+        System.out.printf("  USER DASHBOARD | User: %s (%s) | Status: %s | Risk: %.1f | Balance: $%.2f\n", 
+                user.getUsername(), user.getUserId(), statusStr, avgRisk, user.getBalance());
         System.out.println("=================================================================");
         System.out.println("1. Transfer Funds (Simulate Transaction)");
         System.out.println("2. View Transaction History");
@@ -148,6 +151,10 @@ public class ConsoleApp {
 
     private static void handleTransferSimulation(Scanner scanner) {
         User sender = authService.getCurrentUser();
+        if (riskEngine.isAccountBanned(sender.getUserId())) {
+            System.out.println("\n[ALERT] Account is BANNED due to repeated fraudulent violations. All transactions are blocked.");
+            return;
+        }
         System.out.println("\n--- Fund Transfer Simulator ---");
         System.out.print("Enter Recipient Username or User ID: ");
         String recipientInput = scanner.nextLine().trim();

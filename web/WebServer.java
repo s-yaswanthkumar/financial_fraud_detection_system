@@ -409,10 +409,15 @@ public class WebServer {
     }
 
     private static String userToJson(User u) {
+        boolean banned = riskEngine.isAccountBanned(u.getUserId());
+        double avgRisk = riskEngine.getAccountRiskScore(u.getUserId());
         return "{" +
                 "\"userId\":\"" + escapeJson(u.getUserId()) + "\"," +
                 "\"username\":\"" + escapeJson(u.getUsername()) + "\"," +
                 "\"balance\":" + u.getBalance() + "," +
+                "\"isBanned\":" + banned + "," +
+                "\"accountStatus\":\"" + (banned ? "BANNED" : "ACTIVE") + "\"," +
+                "\"accountRiskScore\":" + (Math.round(avgRisk * 10.0) / 10.0) + "," +
                 "\"createdAt\":\"" + (u.getCreatedAt() != null ? u.getCreatedAt().toString() : "") + "\"" +
                 "}";
     }

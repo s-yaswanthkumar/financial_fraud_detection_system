@@ -34,6 +34,11 @@ public class FraudRiskEngine {
         double score = 0;
         MyArrayList<String> factors = new MyArrayList<>();
 
+        if (isAccountBanned(currentTx.getSenderId())) {
+            factors.add("Account is BANNED: Account has 2 or more previous BLOCKED fraudulent transactions");
+            return new RiskAssessment(100.0, "BLOCKED", factors, true);
+        }
+
         MyArrayList<Transaction> history = storageService.loadTransactions();
         LocalDateTime currentTxTime = currentTx.getTimestamp();
 
@@ -121,5 +126,32 @@ public class FraudRiskEngine {
         }
 
         return new RiskAssessment(score, tier, factors, isBlocked);
+    }
+
+    public boolean isAccountBanned(String userId) {
+        MyArrayList<Transaction> history = storageService.loadTransactions();
+        int blockedCount = 0;
+        for (int i = 0; i < history.size(); i++) {
+            Transaction tx = history.get(i);
+            if (tx.getSenderId().equalsIgnoreCase(userId) && "BLOCKED".equalsIgnoreCase(tx.getStatus())) {
+                blockedCount++;
+            }
+        }
+        return blockedCount >= 2;
+    }
+
+    public double getAccountRiskScore(String userId) {
+        MyArrayList<Transaction> history = storageService.loadTransactions();
+        double totalScore = 0;
+        int count = 0;
+        for (int i = 0; i < history.size(); i++) {
+            Transaction tx = history.get(i);
+            if (tx.getSenderId().equalsIgnoreCase(userId)) {
+                totalScore += tx.getRiskScore();
+                count++;
+            }
+        }
+        if (count == 0) return 0.0;
+        return totalScore / count;
     }
 }

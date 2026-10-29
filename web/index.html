@@ -532,6 +532,8 @@
                     <option value="U105">eve (U105)</option>
                 </select>
                 <div class="balance-pill" id="currentBalanceDisplay">$5,000.00</div>
+                <span id="userStatusBadge" class="status-badge status-APPROVED" style="margin-top: 0; padding: 3px 10px; font-size: 0.75rem;">ACTIVE</span>
+                <span id="userRiskScoreBadge" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Risk: 0.0</span>
             </div>
         </div>
     </header>
@@ -603,7 +605,11 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn" style="width: 100%;">
+                        <div id="bannedWarningBanner" style="display: none; background: var(--danger-bg); border: 1px solid var(--danger); color: #f87171; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-weight: 600;">
+                            ⛔ ACCOUNT BANNED: This account has accumulated 2 or more BLOCKED fraud violations. Outbound transfer privileges are suspended.
+                        </div>
+
+                        <button type="submit" id="submitTransferBtn" class="btn" style="width: 100%;">
                             🔍 Evaluate Fraud Risk & Proceed
                         </button>
                     </form>
@@ -789,6 +795,8 @@
                                 <th>User ID</th>
                                 <th>Username</th>
                                 <th>Balance</th>
+                                <th>Avg Risk</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -897,6 +905,33 @@
             document.getElementById('currentBalanceDisplay').textContent = `$${currentUser.balance.toFixed(2)}`;
             document.getElementById('senderDisplay').value = `${currentUser.username} (${currentUser.userId})`;
 
+            const statusBadge = document.getElementById('userStatusBadge');
+            const riskBadge = document.getElementById('userRiskScoreBadge');
+            const banner = document.getElementById('bannedWarningBanner');
+            const submitBtn = document.getElementById('submitTransferBtn');
+
+            if (currentUser.isBanned) {
+                statusBadge.className = 'status-badge status-BLOCKED';
+                statusBadge.textContent = 'BANNED';
+                riskBadge.textContent = `Risk: ${currentUser.accountRiskScore} (CRITICAL)`;
+                banner.style.display = 'block';
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = '0.5';
+                    submitBtn.textContent = '⛔ Account is Banned from Outbound Transfers';
+                }
+            } else {
+                statusBadge.className = 'status-badge status-APPROVED';
+                statusBadge.textContent = 'ACTIVE';
+                riskBadge.textContent = `Risk: ${currentUser.accountRiskScore}`;
+                banner.style.display = 'none';
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.textContent = '🔍 Evaluate Fraud Risk & Proceed';
+                }
+            }
+
             const recipientSelect = document.getElementById('recipientSelect');
             Array.from(recipientSelect.options).forEach(opt => {
                 opt.disabled = (opt.value === currentUser.userId);
@@ -912,10 +947,14 @@
             tbody.innerHTML = '';
             allUsers.forEach(u => {
                 const tr = document.createElement('tr');
+                const badgeClass = u.isBanned ? 'status-BLOCKED' : 'status-APPROVED';
+                const statusText = u.isBanned ? 'BANNED' : 'ACTIVE';
                 tr.innerHTML = `
                     <td><strong>${u.userId}</strong></td>
                     <td>${u.username}</td>
                     <td style="color: var(--primary); font-weight: 700;">$${u.balance.toFixed(2)}</td>
+                    <td><strong>${u.accountRiskScore ? u.accountRiskScore.toFixed(1) : '0.0'}</strong></td>
+                    <td><span class="status-badge ${badgeClass}" style="margin-top: 0; padding: 2px 8px; font-size: 0.72rem;">${statusText}</span></td>
                     <td>
                         <button class="btn btn-outline" style="padding: 4px 10px; font-size: 0.75rem;" onclick="switchUserDirect('${u.userId}')">
                             Switch
